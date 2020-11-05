@@ -219,112 +219,112 @@ class IFD:
 class Sigma(object):
 
     _data_group1_endian = [
-        ['ShutterSpeed' / Int8ul],
-        ['Aperture' / Int8ul],
-        ['ProgramShift' / Int8ul],
-        ['ISOAuto' / Int8ul],
-        ['ISOSpeed' / Int8ul],
-        ['ExpCompensation' / Int8ul],
-        ['ABValue' / Int8ul],
-        ['ABSetting' / Int8ul],
-        ['FrameBufferState' / Int8ul],
-        ['MediaFreeSpace' / Int16ul],
-        ['MediaStatus' / Int8ul],
-        ['CurrentLensFocalLength' / Int16ul],
-        ['BatteryState' / Int8ul],
-        ['AbShotRemainNumber' / Int8ul],
-        ['ExpCompExcludeAB' / Int8ul],
-        ['AfButtonSetting' / Int8ul],
+        'ShutterSpeed' / Int8ul,
+        'Aperture' / Int8ul,
+        'ProgramShift' / Int8ul,
+        'ISOAuto' / Int8ul,
+        'ISOSpeed' / Int8ul,
+        'ExpCompensation' / Int8ul,
+        'ABValue' / Int8ul,
+        'ABSetting' / Int8ul,
+        'FrameBufferState' / Int8ul,
+        'MediaFreeSpace' / Int16ul,
+        'MediaStatus' / Int8ul,
+        'CurrentLensFocalLength' / Int16ul,
+        'BatteryState' / Int8ul,
+        'AbShotRemainNumber' / Int8ul,
+        'ExpCompExcludeAB' / Int8ul,
+        'AfButtonSetting' / Int8ul,
     ]
 
     _data_group2_endian = [
-        ['DriveMode' / Int8ul],
-        ['SpecialMode' / Int8ul],
-        ['ExposureMode' / Int8ul],
-        ['AEMeteringMode' / Int8ul],
-        ['AELock' / Int8ul],
-        ['AFMode' / Int8ul],
-        ['AFAreaMode' / Int8ul],
-        ['AFLock' / Int8ul],
-        ['FlashType' / Int8ul],
-        ['FlashFire' / Int8ul],
-        ['FlashMode' / Int8ul],
-        ['FlashSetting' / Int8ul],
-        ['FlashExpCompensation' / Int8ul],
-        ['WhiteBalance' / Int8ul],
-        ['Resolution' / Int8ul],
-        ['ImageQuality' / Int8ul],
+        'DriveMode' / Int8ul,
+        'SpecialMode' / Int8ul,
+        'ExposureMode' / Int8ul,
+        'AEMeteringMode' / Int8ul,
+        'AELock' / Int8ul,
+        'AFMode' / Int8ul,
+        'AFAreaMode' / Int8ul,
+        'AFLock' / Int8ul,
+        'FlashType' / Int8ul,
+        'FlashFire' / Int8ul,
+        'FlashMode' / Int8ul,
+        'FlashSetting' / Int8ul,
+        'FlashExpCompensation' / Int8ul,
+        'WhiteBalance' / Int8ul,
+        'Resolution' / Int8ul,
+        'ImageQuality' / Int8ul,
     ]
 
     _data_group3_endian = [
-        ['Contrast' / Int8ul],
-        ['Sharpness' / Int8ul],
-        ['Saturation' / Int8ul],
-        ['ColorSpace' / Int8ul],
-        ['ColorMode' / Int8ul],
-        ['BatteryKind' / Int8ul],
-        ['LensWideFocalLength' / Int16ul],
-        ['LensTeleFocalLength' / Int16ul],
-        ['AFAuxiliaryLight' / Int8ul],
-        ['AFBeep' / Int8ul],
-        ['UPSetting' / Int8ul],
-        ['ExtendedMode' / Int8ul],
-        ['AutoRotate' / Int8ul],
-        ['TimerSound' / Int8ul],
-        ['RCChannel' / Int8ul],
-        ['DestinationToSave' / Int8ul],
+        'Contrast' / Int8ul,
+        'Sharpness' / Int8ul,
+        'Saturation' / Int8ul,
+        'ColorSpace' / Int8ul,
+        'ColorMode' / Int8ul,
+        'BatteryKind' / Int8ul,
+        'LensWideFocalLength' / Int16ul,
+        'LensTeleFocalLength' / Int16ul,
+        'AFAuxiliaryLight' / Int8ul,
+        'AFBeep' / Int8ul,
+        'UPSetting' / Int8ul,
+        'ExtendedMode' / Int8ul,
+        'AutoRotate' / Int8ul,
+        'TimerSound' / Int8ul,
+        'RCChannel' / Int8ul,
+        'DestinationToSave' / Int8ul,
     ]
 
     _data_group4_endian = [
-        ['ISOStepMode' / Int8ul],
-        ['ISOAutoMaxLimit' / Int8ul],
-        ['ISOAutoMinLimit' / Int8ul],
-        ['SFDMode' / Int8ul],
-        ['DCCropMode' / Int8ul],
-        ['LVMagnify' / Int8ul],
-        ['HighSensitivityISOExpansion' / Int8ul],
-        ['ContinuousShootingSpeed' / Int8ul],
-        ['HDR' / Int8ul],
-        ['DNG' / Int8ul],
-        ['FillLight' / Int8ul],
-        ['OpticalDistortion' / Int8ul],
-        ['OpticalAberration' / Int8ul],
-        ['OpticalDiffraction' / Int8ul],
-        ['OpticalLightIntensity' / Int8ul],
-        ['OpticalColorShading' / Int8ul],
-        ['OpticalColorShadingGet' / Int8ul],
-        ['ImageStabilization' / Int8ul],
-        ['ShutterSound' / Int8ul],
+        'ISOStepMode' / Int8ul,
+        'ISOAutoMaxLimit' / Int8ul,
+        'ISOAutoMinLimit' / Int8ul,
+        'SFDMode' / Int8ul,
+        'DCCropMode' / Int8ul,
+        'LVMagnify' / Int8ul,
+        'HighSensitivityISOExpansion' / Int8ul,
+        'ContinuousShootingSpeed' / Int8ul,
+        'HDR' / Int8ul,
+        'DNG' / Int8ul,
+        'FillLight' / Int8ul,
+        'OpticalDistortion' / Int8ul,
+        'OpticalAberration' / Int8ul,
+        'OpticalDiffraction' / Int8ul,
+        'OpticalLightIntensity' / Int8ul,
+        'OpticalColorShading' / Int8ul,
+        'OpticalColorShadingGet' / Int8ul,
+        'ImageStabilization' / Int8ul,
+        'ShutterSound' / Int8ul,
     ]
 
     _data_group5_endian = [
-        ['IntervalTimerSecond' / Int16ul],
-        ['IntervalTimerFrame' / Int8ul],
-        ['RestTimerSecond' / Int16ul],
-        ['RestTimerFrame' / Int8ul],
-        ['ColorTemp' / Int8ul],
-        ['WBCorrectAB' / Int8ul],
-        ['WBCorrectGM' / Int8ul],
-        ['AspectRatio' / Int8ul],
-        ['FilterEffect' / Int8ul],
-        ['ToneEffect' / Int8ul],
-        ['ToneCtrl' / Int8ul],
-        ['PreviewExposureInMmode' / Int8ul],
-        ['FocusPeaking' / Int8ul],
-        ['FaceDetectionAF' / Int8ul],
-        ['AFautoExpand' / Int8ul],
-        ['AFautoExpandCancel' / Int8ul],
-        ['AFSelectPostion' / Int8ul],
-        ['AFAreaPosX' / Int8ul],
-        ['AFAreaPosY' / Int8ul],
-        ['AFAreaSize' / Int8ul],
-        ['BatteryStatePack1' / Int8ul],
-        ['BatteryStatePack2' / Int8ul],
-        ['FaceDetectionState' / Int8ul],
-        ['EyeFiCardState' / Int8ul],
-        ['WiFiStateEyeFiCard' / Int8ul],
-        ['EyeFiFunctionSetting' / Int8ul],
-        ['AFAuxLight' / Int8ul],
+        'IntervalTimerSecond' / Int16ul,
+        'IntervalTimerFrame' / Int8ul,
+        'RestTimerSecond' / Int16ul,
+        'RestTimerFrame' / Int8ul,
+        'ColorTemp' / Int8ul,
+        'WBCorrectAB' / Int8ul,
+        'WBCorrectGM' / Int8ul,
+        'AspectRatio' / Int8ul,
+        'FilterEffect' / Int8ul,
+        'ToneEffect' / Int8ul,
+        'ToneCtrl' / Int8ul,
+        'PreviewExposureInMmode' / Int8ul,
+        'FocusPeaking' / Int8ul,
+        'FaceDetectionAF' / Int8ul,
+        'AFautoExpand' / Int8ul,
+        'AFautoExpandCancel' / Int8ul,
+        'AFSelectPostion' / Int8ul,
+        'AFAreaPosX' / Int8ul,
+        'AFAreaPosY' / Int8ul,
+        'AFAreaSize' / Int8ul,
+        'BatteryStatePack1' / Int8ul,
+        'BatteryStatePack2' / Int8ul,
+        'FaceDetectionState' / Int8ul,
+        'EyeFiCardState' / Int8ul,
+        'WiFiStateEyeFiCard' / Int8ul,
+        'EyeFiFunctionSetting' / Int8ul,
+        'AFAuxLight' / Int8ul,
     ]
 
     def __init__(self, *args, **kwargs):
@@ -423,9 +423,9 @@ class Sigma(object):
     def _data_group_struct(self, field, endian):
         constructor = []
 
-        for sft, l in enumerate(endian):
+        for sft, e in enumerate(endian):
             if field & (1 << sft) != 0:
-                constructor.append(*l)
+                constructor.append(e)
         
         return Struct(*constructor)
 
@@ -454,22 +454,17 @@ class Sigma(object):
 
     def _build_data_group(self, data, endian):
         field = 0
-        for sft, l in enumerate(endian):
-            # search name
-            found = next(( e for e in l if e.name in data.keys() ), None)
-
+        for sft, e in enumerate(endian):
             # bit on when data exist
-            if found:
+            if e.name in data.keys():
                 field |= (1 << sft)
-
         
-        send_data = field.to_bytes(2, byteorder="little")
-        send_data += self._data_group_struct(field, endian).build(data)
+        send_data = struct.pack('<H', field) + self._data_group_struct(field, endian).build(data)
 
         length = len(send_data)
 
-        send_data = length.to_bytes(1, byteorder="little") + send_data
-        send_data += (sum(send_data) & 0xFF).to_bytes(1, byteorder="little")
+        send_data = struct.pack('<B', length) + send_data
+        send_data += struct.pack('<B', sum(send_data) & 0xFF)
 
         return send_data
 
