@@ -570,7 +570,16 @@ class Sigma(object):
         return self.send(ptp, self._buil_parse_ifd_data
         )
         return self._parse_data_group(self.recv(ptp), DG.data_group2_endian)
-    
+
+    def get_cam_data_group2(self, container):
+        ptp = Container(
+            OperationCode='GetCamDataGroup2',
+            SessionID=self._session,
+            TransactionID=self._transaction,
+            Parameter=[]
+        )
+        return self._parse_data_group(self.recv(ptp), DG.data_group2_endian)
+
     def set_cam_data_group2(self, container):
         ptp = Container(
             OperationCode='SetCamDataGroup2',
