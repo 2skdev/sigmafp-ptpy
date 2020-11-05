@@ -12,136 +12,135 @@ import logging
 '''
 ToDo:
  IFDのアドレス参照
- DataGroupのクラス化
 '''
 
-cam_can_set_info5_tag = Enum(
-    Int16ul,
-    DriveMode                       = 1,
-    ContinuousShootingSpeed         = 2,
-    IntervalTimerShots              = 3,
-    IntervalTimer                   = 4,
-    SFD                             = 10,
-    ImageQuality                    = 11,
-    DNGImageQuality                 = 12,
-    StillResolution                 = 20,
-    AspectRatio                     = 21,
-    StillMovieSwitching             = 100,
-    AudioRecord                     = 110,
-    AudioChannelCount               = 111,
-    AudioGainMode                   = 112,
-    AudioManualGain                 = 113,
-    WindNoiseCanceller              = 114,
-    RecordFormat                    = 150,
-    CinemaDNGQuality                = 151,
-    MOVQuality                      = 152,
-    MovieResolution                 = 160,
-    FrameRate                       = 161,
-    Binning                         = 162,
-    ExposureMode                    = 200,
-    ProgramShift                    = 201,
-    _Dummy209                       = 209,
-    FNumberApex                     = 210,
-    TNumberApex                     = 211,
-    ShutterSpeedApex                = 212,
-    ShutterSpeed                    = 213,
-    ShutterAngle                    = 214,
-    ISOApex                         = 215,
-    ISOAuto                         = 216,
-    ExposureCompensation            = 217,
-    ExposureBracketCount            = 218,
-    ExposureBracketOrder            = 219,
-    ExposureBracketAmount           = 220,
-    MeteringMode                    = 250,
-    AELock                          = 251,
-    Flash                           = 252,
-    FlashExposureCompensation       = 253,
-    CustomBracket                   = 300,
-    WhiteBalance                    = 301,
-    WhiteBalanceColorTemperature    = 302,
-    WhiteBalanceCustomCapture       = 303,
-    WhiteBalanceAjustment           = 304,
-    WhiteBalanceBlacketCount        = 305,
-    WhiteBalanceBlacketDirection    = 306,
-    WhiteBalanceBlacketAmount       = 307,
-    ColorMode                       = 320,
-    ColorModeContrast               = 321,
-    ColorModeSharpness              = 322,
-    ColorModeSaturation             = 323,
-    MonochromeFilteringEffect       = 324,
-    MonochromeToningEffect          = 325,
-    ColorModeBracketCount           = 327,
-    FillLight                       = 340,
-    FillLightBracket                = 341,
-    FillLightAmount                 = 342,
-    HDR                             = 350,
-    DCCrop                          = 500,
-    LensDistortion                  = 501,
-    LensChromaticAberration         = 502,
-    LensDiffraction                 = 503,
-    LensVignetting                  = 504,
-    LensColorShading                = 505,
-    LensColorShadingCustomCapture   = 506,
-    FocusMode                       = 600,
-    AFLock                          = 601,
-    FaceAFSetting                   = 602,
-    FocusArea                       = 610,
-    PointSelectMethod               = 611,
-    FocusAreaOverall                = 612,
-    FocusAreaValid                  = 613,
-    DistanceMeasureWindowCount      = 614,
-    DistanceMeasureWindowSize       = 615,
-    DistanceMeasureWindowMove       = 616,
-    PreContinuousAF                 = 650,
-    FocusLimit                      = 651,
-    AFSOperation                    = 656,
-    AFCOperation                    = 657,
-    LVImageTransfer                 = 700,
-    LVMagnificationRate             = 701,
-    FocusPeaking                    = 702,
-    Date                            = 800,
-    ShutterSound                    = 801,
-    AFVolume                        = 802,
-    TimerVolume                     = 803,
-    ElectronicImageStabilization    = 810,
-)
-
-data_group_focus_tag = Enum(
-    Int16ul,
-    FocusMode                       = 1,
-    AFLock                          = 2,
-    FaceAFSetting                   = 3,
-    FaceAFDetectStatus              = 4,
-    FocusArea                       = 10,
-    PointSelectMethod               = 11,
-    DistanceMeasureWindowSize       = 12,
-    DistanceMeasureWindowPosition   = 13,
-    DistanceMeasureWindow           = 14,
-    PreContinuousAF                 = 51,
-    FocusLimit                      = 52,
-)
-
-data_group_movie_tag = Enum(
-    Int16ul,
-    StillCineMode                   = 1,
-    _Dummy3                         = 3,
-    _Dummy4                         = 4,
-    TNumber                         = 5,
-    ShutterSettingMode              = 6,
-    ShutterAngle                    = 7,
-    AudioRecoding                   = 10,
-    AudioGainMode                   = 11,
-    AudioManualGain                 = 12,
-    WindNoiseCanceller              = 13,
-    RecordFormat                    = 50,
-    CinemaDNGQuality                = 51,
-    MOVQuality                      = 52,
-    MovieResolution                 = 60,
-    FrameRate                       = 61,
-    Binning                         = 62,
-)
-
 class IFD:
+    cam_can_set_info5_tag = Enum(
+        Int16ul,
+        DriveMode                       = 1,
+        ContinuousShootingSpeed         = 2,
+        IntervalTimerShots              = 3,
+        IntervalTimer                   = 4,
+        SFD                             = 10,
+        ImageQuality                    = 11,
+        DNGImageQuality                 = 12,
+        StillResolution                 = 20,
+        AspectRatio                     = 21,
+        StillMovieSwitching             = 100,
+        AudioRecord                     = 110,
+        AudioChannelCount               = 111,
+        AudioGainMode                   = 112,
+        AudioManualGain                 = 113,
+        WindNoiseCanceller              = 114,
+        RecordFormat                    = 150,
+        CinemaDNGQuality                = 151,
+        MOVQuality                      = 152,
+        MovieResolution                 = 160,
+        FrameRate                       = 161,
+        Binning                         = 162,
+        ExposureMode                    = 200,
+        ProgramShift                    = 201,
+        _Dummy209                       = 209,
+        FNumberApex                     = 210,
+        TNumberApex                     = 211,
+        ShutterSpeedApex                = 212,
+        ShutterSpeed                    = 213,
+        ShutterAngle                    = 214,
+        ISOApex                         = 215,
+        ISOAuto                         = 216,
+        ExposureCompensation            = 217,
+        ExposureBracketCount            = 218,
+        ExposureBracketOrder            = 219,
+        ExposureBracketAmount           = 220,
+        MeteringMode                    = 250,
+        AELock                          = 251,
+        Flash                           = 252,
+        FlashExposureCompensation       = 253,
+        CustomBracket                   = 300,
+        WhiteBalance                    = 301,
+        WhiteBalanceColorTemperature    = 302,
+        WhiteBalanceCustomCapture       = 303,
+        WhiteBalanceAjustment           = 304,
+        WhiteBalanceBlacketCount        = 305,
+        WhiteBalanceBlacketDirection    = 306,
+        WhiteBalanceBlacketAmount       = 307,
+        ColorMode                       = 320,
+        ColorModeContrast               = 321,
+        ColorModeSharpness              = 322,
+        ColorModeSaturation             = 323,
+        MonochromeFilteringEffect       = 324,
+        MonochromeToningEffect          = 325,
+        ColorModeBracketCount           = 327,
+        FillLight                       = 340,
+        FillLightBracket                = 341,
+        FillLightAmount                 = 342,
+        HDR                             = 350,
+        DCCrop                          = 500,
+        LensDistortion                  = 501,
+        LensChromaticAberration         = 502,
+        LensDiffraction                 = 503,
+        LensVignetting                  = 504,
+        LensColorShading                = 505,
+        LensColorShadingCustomCapture   = 506,
+        FocusMode                       = 600,
+        AFLock                          = 601,
+        FaceAFSetting                   = 602,
+        FocusArea                       = 610,
+        PointSelectMethod               = 611,
+        FocusAreaOverall                = 612,
+        FocusAreaValid                  = 613,
+        DistanceMeasureWindowCount      = 614,
+        DistanceMeasureWindowSize       = 615,
+        DistanceMeasureWindowMove       = 616,
+        PreContinuousAF                 = 650,
+        FocusLimit                      = 651,
+        AFSOperation                    = 656,
+        AFCOperation                    = 657,
+        LVImageTransfer                 = 700,
+        LVMagnificationRate             = 701,
+        FocusPeaking                    = 702,
+        Date                            = 800,
+        ShutterSound                    = 801,
+        AFVolume                        = 802,
+        TimerVolume                     = 803,
+        ElectronicImageStabilization    = 810,
+    )
+
+    data_group_focus_tag = Enum(
+        Int16ul,
+        FocusMode                       = 1,
+        AFLock                          = 2,
+        FaceAFSetting                   = 3,
+        FaceAFDetectStatus              = 4,
+        FocusArea                       = 10,
+        PointSelectMethod               = 11,
+        DistanceMeasureWindowSize       = 12,
+        DistanceMeasureWindowPosition   = 13,
+        DistanceMeasureWindow           = 14,
+        PreContinuousAF                 = 51,
+        FocusLimit                      = 52,
+    )
+
+    data_group_movie_tag = Enum(
+        Int16ul,
+        StillCineMode                   = 1,
+        _Dummy3                         = 3,
+        _Dummy4                         = 4,
+        TNumber                         = 5,
+        ShutterSettingMode              = 6,
+        ShutterAngle                    = 7,
+        AudioRecoding                   = 10,
+        AudioGainMode                   = 11,
+        AudioManualGain                 = 12,
+        WindNoiseCanceller              = 13,
+        RecordFormat                    = 50,
+        CinemaDNGQuality                = 51,
+        MOVQuality                      = 52,
+        MovieResolution                 = 60,
+        FrameRate                       = 61,
+        Binning                         = 62,
+    )
+
     types = Enum(
         Int16ul,
         Byte        = 1,    # 1  byte
@@ -166,22 +165,22 @@ class IFD:
     def type(self):
         return self._container.Type
     @type.setter
-    def type(self, v):
-        self._container.Type = v
+    def type(self, data):
+        self._container.Type = data
 
     @property
     def count(self):
         return self._container.Count
     @count.setter
-    def count(self, v):
-        self._container.Count = v
+    def count(self, data):
+        self._container.Count = data
 
     @property
     def value(self):
         return self._container.Value
     @value.setter
-    def value(self, v):
-        self._container.Value = v
+    def value(self, data):
+        self._container.Value = data
 
     @staticmethod
     def struct(tag):
@@ -216,9 +215,8 @@ class IFD:
             self._container.TagId = tag_id
 
 
-class Sigma(object):
-
-    _data_group1_endian = [
+class DG:
+    data_group1_endian = [
         'ShutterSpeed' / Int8ul,
         'Aperture' / Int8ul,
         'ProgramShift' / Int8ul,
@@ -237,7 +235,7 @@ class Sigma(object):
         'AfButtonSetting' / Int8ul,
     ]
 
-    _data_group2_endian = [
+    data_group2_endian = [
         'DriveMode' / Int8ul,
         'SpecialMode' / Int8ul,
         'ExposureMode' / Int8ul,
@@ -256,7 +254,7 @@ class Sigma(object):
         'ImageQuality' / Int8ul,
     ]
 
-    _data_group3_endian = [
+    data_group3_endian = [
         'Contrast' / Int8ul,
         'Sharpness' / Int8ul,
         'Saturation' / Int8ul,
@@ -275,7 +273,7 @@ class Sigma(object):
         'DestinationToSave' / Int8ul,
     ]
 
-    _data_group4_endian = [
+    data_group4_endian = [
         'ISOStepMode' / Int8ul,
         'ISOAutoMaxLimit' / Int8ul,
         'ISOAutoMinLimit' / Int8ul,
@@ -297,7 +295,7 @@ class Sigma(object):
         'ShutterSound' / Int8ul,
     ]
 
-    _data_group5_endian = [
+    data_group5_endian = [
         'IntervalTimerSecond' / Int16ul,
         'IntervalTimerFrame' / Int8ul,
         'RestTimerSecond' / Int16ul,
@@ -326,6 +324,52 @@ class Sigma(object):
         'EyeFiFunctionSetting' / Int8ul,
         'AFAuxLight' / Int8ul,
     ]
+
+    @staticmethod
+    def struct(field, endian):
+        constructor = []
+
+        for sft, e in enumerate(endian):
+            if field & (1 << sft) != 0:
+                constructor.append(e)
+        
+        return Struct(*constructor)
+
+    @staticmethod
+    def parse(field, endian, data):
+        container = DG.struct(field, endian).parse(data)
+        return DG(endian, container)
+
+    def build(self):
+        field = 0
+
+        for sft, e in enumerate(self._endian):
+            # bit on when data exist
+            if e.name in self._container.keys():
+                field |= (1 << sft)
+
+        data = DG.struct(field, self._endian).build(self._container)
+
+        return struct.pack('<H', field) + data
+
+    def get_data(self, name):
+        if not hasattr(self._container, name):
+            return None
+        return self._container[name]
+
+    def set_data(self, name, data):
+        if not hasattr(self._container, name):
+            raise
+        self._container[name] = data
+    
+    def keys(self):
+        return list(self._container.keys())
+
+    def __init__(self, endian, container):
+        self._endian = endian
+        self._container = container
+
+class Sigma(object):
 
     def __init__(self, *args, **kwargs):
         print('Init Sigma')
@@ -420,15 +464,6 @@ class Sigma(object):
             **product_operations
         )
 
-    def _data_group_struct(self, field, endian):
-        constructor = []
-
-        for sft, e in enumerate(endian):
-            if field & (1 << sft) != 0:
-                constructor.append(e)
-        
-        return Struct(*constructor)
-
     def _parse_data_group(self, response, endian):
         '''
         format
@@ -450,18 +485,11 @@ class Sigma(object):
 
         field = response.Data[2] << 8 | response.Data[1]
 
-        return self._data_group_struct(field, endian).parse(response.Data[3:-1])
+        return DG.parse(field, endian, response.Data[3:-1])
 
-    def _build_data_group(self, data, endian):
-        field = 0
-        for sft, e in enumerate(endian):
-            # bit on when data exist
-            if e.name in data.keys():
-                field |= (1 << sft)
-        
-        send_data = struct.pack('<H', field) + self._data_group_struct(field, endian).build(data)
-
-        length = len(send_data)
+    def _build_data_group(self, datagroup, endian):
+        send_data = datagroup.build()
+        length    = len(send_data)
 
         send_data = struct.pack('<B', length) + send_data
         send_data += struct.pack('<B', sum(send_data) & 0xFF)
@@ -469,7 +497,7 @@ class Sigma(object):
         return send_data
 
 
-    def _parse_ifd_data(self, response, tag):
+    def _parse_ifd(self, response, tag):
         '''
         format
         b0~4: length
@@ -482,16 +510,16 @@ class Sigma(object):
 
         length, count = struct.unpack_from('<II', response.Data, 0)
 
-        ifd_size = IFD.sizeof()
-        ifd_dict = {}
+        sizeof = IFD.sizeof()
+        ifds = {}
 
         for i in range(count):
-            ifd = IFD.parse(tag, response.Data[i*ifd_size+8:])
-            ifd_dict[ifd.tag_id] = ifd
+            ifd = IFD.parse(tag, response.Data[i*sizeof+8:])
+            ifds[ifd.tag_id] = ifd
 
-        return ifd_dict
+        return ifds
 
-    def _build_ifd_data(self, ifds, tag):
+    def _build_ifd(self, ifds, tag):
         send_data  = b''
 
         for ifd in ifds.values():
@@ -530,7 +558,7 @@ class Sigma(object):
             TransactionID=self._transaction,
             Parameter=[]
         )
-        return self._parse_data_group(self.recv(ptp), self._data_group1_endian)
+        return self._parse_data_group(self.recv(ptp), DG.data_group1_endian)
     
     def set_cam_data_group1(self, container):
         ptp = Container(
@@ -541,7 +569,7 @@ class Sigma(object):
         )
         return self.send(ptp, self._buil_parse_ifd_data
         )
-        return self._parse_data_group(self.recv(ptp), self._data_group2_endian)
+        return self._parse_data_group(self.recv(ptp), DG.data_group2_endian)
     
     def set_cam_data_group2(self, container):
         ptp = Container(
@@ -550,7 +578,7 @@ class Sigma(object):
             TransactionID=self._transaction,
             Parameter=[]
         )
-        return self.send(ptp, self._build_data_group(container, self._data_group2_endian))
+        return self.send(ptp, self._build_data_group(container, DG.data_group2_endian))
 
     def get_cam_data_group3(self):
         ptp = Container(
@@ -559,7 +587,7 @@ class Sigma(object):
             TransactionID=self._transaction,
             Parameter=[]
         )
-        return self._parse_data_group(self.recv(ptp), self._data_group3_endian)
+        return self._parse_data_group(self.recv(ptp), DG.data_group3_endian)
 
     def set_cam_data_group3(self, container):
         ptp = Container(
@@ -568,7 +596,7 @@ class Sigma(object):
             TransactionID=self._transaction,
             Parameter=[]
         )
-        return self.send(ptp, self._build_data_group(container, self._data_group3_endian))
+        return self.send(ptp, self._build_data_group(container, DG.data_group3_endian))
 
     def get_cam_data_group4(self):
         ptp = Container(
@@ -577,7 +605,7 @@ class Sigma(object):
             TransactionID=self._transaction,
             Parameter=[]
         )
-        return self._parse_data_group(self.recv(ptp), self._data_group4_endian)
+        return self._parse_data_group(self.recv(ptp), DG.data_group4_endian)
 
     def set_cam_data_group4(self, container):
         ptp = Container(
@@ -586,7 +614,7 @@ class Sigma(object):
             TransactionID=self._transaction,
             Parameter=[]
         )
-        return self.send(ptp, self._build_data_group(container, self._data_group4_endian))
+        return self.send(ptp, self._build_data_group(container, DG.data_group4_endian))
 
     def get_cam_data_group5(self):
         ptp = Container(
@@ -595,7 +623,7 @@ class Sigma(object):
             TransactionID=self._transaction,
             Parameter=[]
         )
-        return self._parse_data_group(self.recv(ptp), self._data_group5_endian)
+        return self._parse_data_group(self.recv(ptp), DG.data_group5_endian)
 
     def set_cam_data_group5(self, container):
         ptp = Container(
@@ -604,7 +632,7 @@ class Sigma(object):
             TransactionID=self._transaction,
             Parameter=[]
         )
-        return self.send(ptp, self._build_data_group(container, self._data_group5_endian))
+        return self.send(ptp, self._build_data_group(container, DG.data_group5_endian))
 
     def get_view_frame(self):
         ptp = Container(
@@ -622,16 +650,16 @@ class Sigma(object):
             TransactionID=self._transaction,
             Parameter=[]
         )
-        return self._parse_ifd_data(self.recv(ptp), IFD.data_group_movie_tag)
+        return self._parse_ifd(self.recv(ptp), IFD.data_group_movie_tag)
 
-    def set_cam_data_group_focus(self, container):
+    def set_cam_data_group_focus(self, ifds):
         ptp = Container(
             OperationCode='SetCamDataGroupMovie',
             SessionID=self._session,
             TransactionID=self._transaction,
             Parameter=[]
         )
-        return self.send(ptp, self._build_ifd_data(container, IFD.data_group_movie_tag))
+        return self.send(ptp, self._build_ifd(ifds, IFD.data_group_movie_tag))
 
     def get_cam_data_group_focus(self):
         ptp = Container(
@@ -640,16 +668,16 @@ class Sigma(object):
             TransactionID=self._transaction,
             Parameter=[]
         )
-        return self._parse_ifd_data(self.recv(ptp), IFD.data_group_focus_tag)
+        return self._parse_ifd(self.recv(ptp), IFD.data_group_focus_tag)
 
-    def set_cam_data_group_focus(self, container):
+    def set_cam_data_group_focus(self, ifds):
         ptp = Container(
             OperationCode='SetCamDataGroupFocus',
             SessionID=self._session,
             TransactionID=self._transaction,
             Parameter=[]
         )
-        return self.send(ptp, self._build_ifd_data(container, IFD.data_group_focus_tag))
+        return self.send(ptp, self._build_ifd(ifds, IFD.data_group_focus_tag))
 
     def get_cam_can_set_info5(self):
         ptp = Container(
@@ -658,4 +686,4 @@ class Sigma(object):
             TransactionID=self._transaction,
             Parameter=[]
         )
-        return self._parse_ifd_data(self.recv(ptp), IFD.cam_can_set_info5_tag)
+        return self._parse_ifd(self.recv(ptp), IFD.cam_can_set_info5_tag)
