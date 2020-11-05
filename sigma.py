@@ -11,174 +11,152 @@ import logging
 
 '''
 ToDo:
- IFDをResponseからではなく、__init__から作れるようにする
+ IFDのアドレス参照
  DataGroupのクラス化
 '''
 
+cam_can_set_info5_tag = Enum(
+    Int16ul,
+    DriveMode                       = 1,
+    ContinuousShootingSpeed         = 2,
+    IntervalTimerShots              = 3,
+    IntervalTimer                   = 4,
+    SFD                             = 10,
+    ImageQuality                    = 11,
+    DNGImageQuality                 = 12,
+    StillResolution                 = 20,
+    AspectRatio                     = 21,
+    StillMovieSwitching             = 100,
+    AudioRecord                     = 110,
+    AudioChannelCount               = 111,
+    AudioGainMode                   = 112,
+    AudioManualGain                 = 113,
+    WindNoiseCanceller              = 114,
+    RecordFormat                    = 150,
+    CinemaDNGQuality                = 151,
+    MOVQuality                      = 152,
+    MovieResolution                 = 160,
+    FrameRate                       = 161,
+    Binning                         = 162,
+    ExposureMode                    = 200,
+    ProgramShift                    = 201,
+    _Dummy209                       = 209,
+    FNumberApex                     = 210,
+    TNumberApex                     = 211,
+    ShutterSpeedApex                = 212,
+    ShutterSpeed                    = 213,
+    ShutterAngle                    = 214,
+    ISOApex                         = 215,
+    ISOAuto                         = 216,
+    ExposureCompensation            = 217,
+    ExposureBracketCount            = 218,
+    ExposureBracketOrder            = 219,
+    ExposureBracketAmount           = 220,
+    MeteringMode                    = 250,
+    AELock                          = 251,
+    Flash                           = 252,
+    FlashExposureCompensation       = 253,
+    CustomBracket                   = 300,
+    WhiteBalance                    = 301,
+    WhiteBalanceColorTemperature    = 302,
+    WhiteBalanceCustomCapture       = 303,
+    WhiteBalanceAjustment           = 304,
+    WhiteBalanceBlacketCount        = 305,
+    WhiteBalanceBlacketDirection    = 306,
+    WhiteBalanceBlacketAmount       = 307,
+    ColorMode                       = 320,
+    ColorModeContrast               = 321,
+    ColorModeSharpness              = 322,
+    ColorModeSaturation             = 323,
+    MonochromeFilteringEffect       = 324,
+    MonochromeToningEffect          = 325,
+    ColorModeBracketCount           = 327,
+    FillLight                       = 340,
+    FillLightBracket                = 341,
+    FillLightAmount                 = 342,
+    HDR                             = 350,
+    DCCrop                          = 500,
+    LensDistortion                  = 501,
+    LensChromaticAberration         = 502,
+    LensDiffraction                 = 503,
+    LensVignetting                  = 504,
+    LensColorShading                = 505,
+    LensColorShadingCustomCapture   = 506,
+    FocusMode                       = 600,
+    AFLock                          = 601,
+    FaceAFSetting                   = 602,
+    FocusArea                       = 610,
+    PointSelectMethod               = 611,
+    FocusAreaOverall                = 612,
+    FocusAreaValid                  = 613,
+    DistanceMeasureWindowCount      = 614,
+    DistanceMeasureWindowSize       = 615,
+    DistanceMeasureWindowMove       = 616,
+    PreContinuousAF                 = 650,
+    FocusLimit                      = 651,
+    AFSOperation                    = 656,
+    AFCOperation                    = 657,
+    LVImageTransfer                 = 700,
+    LVMagnificationRate             = 701,
+    FocusPeaking                    = 702,
+    Date                            = 800,
+    ShutterSound                    = 801,
+    AFVolume                        = 802,
+    TimerVolume                     = 803,
+    ElectronicImageStabilization    = 810,
+)
+
+data_group_focus_tag = Enum(
+    Int16ul,
+    FocusMode                       = 1,
+    AFLock                          = 2,
+    FaceAFSetting                   = 3,
+    FaceAFDetectStatus              = 4,
+    FocusArea                       = 10,
+    PointSelectMethod               = 11,
+    DistanceMeasureWindowSize       = 12,
+    DistanceMeasureWindowPosition   = 13,
+    DistanceMeasureWindow           = 14,
+    PreContinuousAF                 = 51,
+    FocusLimit                      = 52,
+)
+
+data_group_movie_tag = Enum(
+    Int16ul,
+    StillCineMode                   = 1,
+    _Dummy3                         = 3,
+    _Dummy4                         = 4,
+    TNumber                         = 5,
+    ShutterSettingMode              = 6,
+    ShutterAngle                    = 7,
+    AudioRecoding                   = 10,
+    AudioGainMode                   = 11,
+    AudioManualGain                 = 12,
+    WindNoiseCanceller              = 13,
+    RecordFormat                    = 50,
+    CinemaDNGQuality                = 51,
+    MOVQuality                      = 52,
+    MovieResolution                 = 60,
+    FrameRate                       = 61,
+    Binning                         = 62,
+)
+
 class IFD:
-
-    _IFD_type_size = {
-        'Byte'      : 1,
-        'ASCII'     : 9,
-        'Short'     : 2,
-        'Long'      : 4,
-        'Rational'  : 8,
-        'SByte'     : 1,
-        'Undefined' : 8,
-        'SShort'    : 2,
-        'SLong'     : 4,
-        'SRatonal'  : 8,
-        'Float'     : 8,
-        'Double'    : 16,
-    }
-
-    cam_can_set_info5_tag = Enum(
+    types = Enum(
         Int16ul,
-        DriveMode                       = 1,
-        ContinuousShootingSpeed         = 2,
-        IntervalTimerShots              = 3,
-        IntervalTimer                   = 4,
-        SFD                             = 10,
-        ImageQuality                    = 11,
-        DNGImageQuality                 = 12,
-        StillResolution                 = 20,
-        AspectRatio                     = 21,
-        StillMovieSwitching             = 100,
-        AudioRecord                     = 110,
-        AudioChannelCount               = 111,
-        AudioGainMode                   = 112,
-        AudioManualGain                 = 113,
-        WindNoiseCanceller              = 114,
-        RecordFormat                    = 150,
-        CinemaDNGQuality                = 151,
-        MOVQuality                      = 152,
-        MovieResolution                 = 160,
-        FrameRate                       = 161,
-        Binning                         = 162,
-        ExposureMode                    = 200,
-        ProgramShift                    = 201,
-        _Dummy209                       = 209,
-        FNumberApex                     = 210,
-        TNumberApex                     = 211,
-        ShutterSpeedApex                = 212,
-        ShutterSpeed                    = 213,
-        ShutterAngle                    = 214,
-        ISOApex                         = 215,
-        ISOAuto                         = 216,
-        ExposureCompensation            = 217,
-        ExposureBracketCount            = 218,
-        ExposureBracketOrder            = 219,
-        ExposureBracketAmount           = 220,
-        MeteringMode                    = 250,
-        AELock                          = 251,
-        Flash                           = 252,
-        FlashExposureCompensation       = 253,
-        CustomBracket                   = 300,
-        WhiteBalance                    = 301,
-        WhiteBalanceColorTemperature    = 302,
-        WhiteBalanceCustomCapture       = 303,
-        WhiteBalanceAjustment           = 304,
-        WhiteBalanceBlacketCount        = 305,
-        WhiteBalanceBlacketDirection    = 306,
-        WhiteBalanceBlacketAmount       = 307,
-        ColorMode                       = 320,
-        ColorModeContrast               = 321,
-        ColorModeSharpness              = 322,
-        ColorModeSaturation             = 323,
-        MonochromeFilteringEffect       = 324,
-        MonochromeToningEffect          = 325,
-        ColorModeBracketCount           = 327,
-        FillLight                       = 340,
-        FillLightBracket                = 341,
-        FillLightAmount                 = 342,
-        HDR                             = 350,
-        DCCrop                          = 500,
-        LensDistortion                  = 501,
-        LensChromaticAberration         = 502,
-        LensDiffraction                 = 503,
-        LensVignetting                  = 504,
-        LensColorShading                = 505,
-        LensColorShadingCustomCapture   = 506,
-        FocusMode                       = 600,
-        AFLock                          = 601,
-        FaceAFSetting                   = 602,
-        FocusArea                       = 610,
-        PointSelectMethod               = 611,
-        FocusAreaOverall                = 612,
-        FocusAreaValid                  = 613,
-        DistanceMeasureWindowCount      = 614,
-        DistanceMeasureWindowSize       = 615,
-        DistanceMeasureWindowMove       = 616,
-        PreContinuousAF                 = 650,
-        FocusLimit                      = 651,
-        AFSOperation                    = 656,
-        AFCOperation                    = 657,
-        LVImageTransfer                 = 700,
-        LVMagnificationRate             = 701,
-        FocusPeaking                    = 702,
-        Date                            = 800,
-        ShutterSound                    = 801,
-        AFVolume                        = 802,
-        TimerVolume                     = 803,
-        ElectronicImageStabilization    = 810,
+        Byte        = 1,    # 1  byte
+        ASCII       = 2,    # 9  byte
+        Short       = 3,    # 2  byte
+        Long        = 4,    # 4  byte
+        Rational    = 5,    # 8  byte
+        SByte       = 6,    # 1  byte
+        Undefined   = 7,    # 8  byte
+        SShort      = 8,    # 2  byte
+        SLong       = 9,    # 4  byte
+        SRatonal    = 10,   # 8  byte
+        Float       = 11,   # 8  byte
+        Double      = 12,   # 16 byte
     )
-
-    data_group_focus_tag = Enum(
-        Int16ul,
-        FocusMode                       = 1,
-        AFLock                          = 2,
-        FaceAFSetting                   = 3,
-        FaceAFDetectStatus              = 4,
-        FocusArea                       = 10,
-        PointSelectMethod               = 11,
-        DistanceMeasureWindowSize       = 12,
-        DistanceMeasureWindowPosition   = 13,
-        DistanceMeasureWindow           = 14,
-        PreContinuousAF                 = 51,
-        FocusLimit                      = 52,
-    )
-
-    data_group_movie_tag = Enum(
-        Int16ul,
-        StillCineMode                   = 1,
-        _Dummy3                         = 3,
-        _Dummy4                         = 4,
-        TNumber                         = 5,
-        ShutterSettingMode              = 6,
-        ShutterAngle                    = 7,
-        AudioRecoding                   = 10,
-        AudioGainMode                   = 11,
-        AudioManualGain                 = 12,
-        WindNoiseCanceller              = 13,
-        RecordFormat                    = 50,
-        CinemaDNGQuality                = 51,
-        MOVQuality                      = 52,
-        MovieResolution                 = 60,
-        FrameRate                       = 61,
-        Binning                         = 62,
-    )
-
-    @classmethod
-    def _IFD_type(cls):
-        types = { key : i + 1 for i, key in enumerate(cls._IFD_type_size) }
-
-        return Enum(
-            Int16ul,
-            **types
-        )
-
-    @classmethod
-    def create_IFD_struct(cls, tag):
-        return Struct(
-            'TagId' / tag,
-            'Type' / cls._IFD_type(),
-            'Count' / Int32ul,
-            'Value' / Int32ul,
-        )
-
-    @classmethod
-    def parse(cls, struct, data):
-        return cls(struct, data)
 
     @property
     def tag_id(self):
@@ -187,27 +165,55 @@ class IFD:
     @property
     def type(self):
         return self._container.Type
+    @type.setter
+    def type(self, v):
+        self._container.Type = v
 
     @property
     def count(self):
         return self._container.Count
+    @count.setter
+    def count(self, v):
+        self._container.Count = v
 
     @property
     def value(self):
         return self._container.Value
-
     @value.setter
     def value(self, v):
         self._container.Value = v
 
+    @staticmethod
+    def struct(tag):
+        return Struct(
+            'TagId' / tag,
+            'Type' / IFD.types,
+            'Count' / Int32ul,
+            'Value' / Int32ul,
+        )
+
+    @staticmethod
+    def sizeof():
+        return IFD.struct(Int16ul).sizeof()
+
+    @staticmethod
+    def parse(tag, data):
+        ifd = IFD(tag)
+        ifd._container = ifd._struct.parse(data)
+        return ifd
+
     def build(self):
         return self._struct.build(self._container)
 
-    def __init__(self, struct, data):
-        container = struct.parse(data)
-        
-        self._struct = struct
-        self._container = container
+    def __init__(self, tag, tag_id=None):
+        # create struct
+        self._struct = IFD.struct(tag)
+
+        # init container
+        self._container = self._struct.parse(b'\x00' * self._struct.sizeof())
+
+        if tag_id:
+            self._container.TagId = tag_id
 
 
 class Sigma(object):
@@ -424,16 +430,8 @@ class Sigma(object):
         return Struct(*constructor)
 
     def _parse_data_group(self, response, endian):
-        if not hasattr(response, 'Data'):
-            return None
-
-        field = response.Data[2] << 8 | response.Data[1]
-
-        return self._data_group_struct(field, endian).parse(response.Data[3:-1])
-
-    def _build_data_group(self, data, endian):
         '''
-        send format
+        format
         b0: length
         b1, b2: data field
         b3~: data
@@ -444,10 +442,17 @@ class Sigma(object):
           field: 0x10 0x00
           data: 0x02 (mono)
           length: field + data = 3
-          check sum: 0x10 + 0x00 + 0x02 + 3 = 0x15
+          check sum: field(0x10 + 0x00) + data(0x02) + length(3) = 0x15
           => send [0x03 0x10 0x00 0x02 0x15]
         '''
+        if not hasattr(response, 'Data'):
+            return None
 
+        field = response.Data[2] << 8 | response.Data[1]
+
+        return self._data_group_struct(field, endian).parse(response.Data[3:-1])
+
+    def _build_data_group(self, data, endian):
         field = 0
         for sft, l in enumerate(endian):
             # search name
@@ -470,32 +475,38 @@ class Sigma(object):
 
 
     def _parse_ifd_data(self, response, tag):
+        '''
+        format
+        b0~4: length
+        b5~8: count
+        b9~: ifd
+        b-1: checksum
+        '''
         if not hasattr(response, 'Data'):
             return None
 
         length, count = struct.unpack_from('<II', response.Data, 0)
 
-        ifd_struct = IFD.create_IFD_struct(tag)
-        ifd_sizeof = ifd_struct.sizeof()
-        ifd_dict   = {}
+        ifd_size = IFD.sizeof()
+        ifd_dict = {}
 
         for i in range(count):
-            ifd = IFD.parse(ifd_struct, response.Data[i*ifd_sizeof+8:])
+            ifd = IFD.parse(tag, response.Data[i*ifd_size+8:])
             ifd_dict[ifd.tag_id] = ifd
 
         return ifd_dict
 
-    def _build_ifd_data(self, data, tag):
+    def _build_ifd_data(self, ifds, tag):
         send_data  = b''
 
-        for d in data.values():
-            send_data += d.build()
+        for ifd in ifds.values():
+            send_data += ifd.build()
         
         length = len(send_data)
-        count  = len(data)
+        count  = len(ifds)
 
-        send_data = length.to_bytes(4, byteorder="little") + count.to_bytes(4, byteorder='little') + send_data
-        send_data += (sum(send_data) & 0xFF).to_bytes(1, byteorder="little")
+        send_data = struct.pack('<II', length, count) + send_data
+        send_data += struct.pack('<B', sum(send_data) & 0xFF)
 
         return send_data
 
