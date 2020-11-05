@@ -205,10 +205,8 @@ class IFD:
         return self._struct.build(self._container)
 
     def __init__(self, tag, tag_id=None):
-        # create struct
         self._struct = IFD.struct(tag)
 
-        # init container
         self._container = self._struct.parse(b'\x00' * self._struct.sizeof())
 
         if tag_id:
@@ -363,7 +361,13 @@ class DG:
         self._container[name] = data
     
     def keys(self):
-        return list(self._container.keys())
+        return self.items().keys()
+
+    def values(self):
+        return self.items().values()
+
+    def items(self):
+        return {k: v for k, v in self._container.items() if k[0] != '_' }
 
     def __init__(self, endian, container):
         self._endian = endian
@@ -487,7 +491,7 @@ class Sigma(object):
 
         return DG.parse(field, endian, response.Data[3:-1])
 
-    def _build_data_group(self, datagroup, endian):
+    def _build_data_group(self, datagroup):
         send_data = datagroup.build()
         length    = len(send_data)
 
@@ -519,7 +523,7 @@ class Sigma(object):
 
         return ifds
 
-    def _build_ifd(self, ifds, tag):
+    def _build_ifd(self, ifds):
         send_data  = b''
 
         for ifd in ifds.values():
@@ -560,18 +564,16 @@ class Sigma(object):
         )
         return self._parse_data_group(self.recv(ptp), DG.data_group1_endian)
     
-    def set_cam_data_group1(self, container):
+    def set_cam_data_group1(self, dg):
         ptp = Container(
             OperationCode='SetCamDataGroup1',
             SessionID=self._session,
             TransactionID=self._transaction,
             Parameter=[]
         )
-        return self.send(ptp, self._buil_parse_ifd_data
-        )
-        return self._parse_data_group(self.recv(ptp), DG.data_group2_endian)
+        return self.send(ptp, self._build_data_group(dg))
 
-    def get_cam_data_group2(self, container):
+    def get_cam_data_group2(self):
         ptp = Container(
             OperationCode='GetCamDataGroup2',
             SessionID=self._session,
@@ -580,14 +582,14 @@ class Sigma(object):
         )
         return self._parse_data_group(self.recv(ptp), DG.data_group2_endian)
 
-    def set_cam_data_group2(self, container):
+    def set_cam_data_group2(self, dg):
         ptp = Container(
             OperationCode='SetCamDataGroup2',
             SessionID=self._session,
             TransactionID=self._transaction,
             Parameter=[]
         )
-        return self.send(ptp, self._build_data_group(container, DG.data_group2_endian))
+        return self.send(ptp, self._build_data_group(dg))
 
     def get_cam_data_group3(self):
         ptp = Container(
@@ -598,14 +600,14 @@ class Sigma(object):
         )
         return self._parse_data_group(self.recv(ptp), DG.data_group3_endian)
 
-    def set_cam_data_group3(self, container):
+    def set_cam_data_group3(self, dg):
         ptp = Container(
             OperationCode='SetCamDataGroup3',
             SessionID=self._session,
             TransactionID=self._transaction,
             Parameter=[]
         )
-        return self.send(ptp, self._build_data_group(container, DG.data_group3_endian))
+        return self.send(ptp, self._build_data_group(dg))
 
     def get_cam_data_group4(self):
         ptp = Container(
@@ -616,14 +618,14 @@ class Sigma(object):
         )
         return self._parse_data_group(self.recv(ptp), DG.data_group4_endian)
 
-    def set_cam_data_group4(self, container):
+    def set_cam_data_group4(self, dg):
         ptp = Container(
             OperationCode='SetCamDataGroup4',
             SessionID=self._session,
             TransactionID=self._transaction,
             Parameter=[]
         )
-        return self.send(ptp, self._build_data_group(container, DG.data_group4_endian))
+        return self.send(ptp, self._build_data_group(dg))
 
     def get_cam_data_group5(self):
         ptp = Container(
@@ -634,14 +636,14 @@ class Sigma(object):
         )
         return self._parse_data_group(self.recv(ptp), DG.data_group5_endian)
 
-    def set_cam_data_group5(self, container):
+    def set_cam_data_group5(self, dg):
         ptp = Container(
             OperationCode='SetCamDataGroup5',
             SessionID=self._session,
             TransactionID=self._transaction,
             Parameter=[]
         )
-        return self.send(ptp, self._build_data_group(container, DG.data_group5_endian))
+        return self.send(ptp, self._build_data_group(dg))
 
     def get_view_frame(self):
         ptp = Container(
@@ -668,7 +670,7 @@ class Sigma(object):
             TransactionID=self._transaction,
             Parameter=[]
         )
-        return self.send(ptp, self._build_ifd(ifds, IFD.data_group_movie_tag))
+        return self.send(ptp, self._build_ifd(ifds))
 
     def get_cam_data_group_focus(self):
         ptp = Container(
@@ -686,7 +688,7 @@ class Sigma(object):
             TransactionID=self._transaction,
             Parameter=[]
         )
-        return self.send(ptp, self._build_ifd(ifds, IFD.data_group_focus_tag))
+        return self.send(ptp, self._build_ifd(ifds))
 
     def get_cam_can_set_info5(self):
         ptp = Container(
@@ -696,3 +698,10 @@ class Sigma(object):
             Parameter=[]
         )
         return self._parse_ifd(self.recv(ptp), IFD.cam_can_set_info5_tag)
+
+    def get_cam_data_group1_dummy(self):
+        c = Container(Data = b'\x03\x10\x00\x02\x15')
+        return self._parse_data_group(c, DG.data_group1_endian)
+
+    def set_cam_data_group1_dummy(self, dg):
+        return self._build_data_group(dg)
